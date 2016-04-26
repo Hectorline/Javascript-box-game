@@ -2,6 +2,14 @@
 <html>
 	<head>
 		<title> Cajas </title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+			$("p").click(function(){
+			$(this).hide();
+			});
+			});
+</script>
 		
 	</head>
 <body>
@@ -63,6 +71,7 @@
 	<p id="distx"></p>
 	<p id="disty"></p>
 	<button onclick="RandomBlock()">Random</button>
+	<button onclick="AutoSearchBox()">Autosearch</button>
 <script>
 
 	var elem = document.getElementById("animate"); 
@@ -85,8 +94,8 @@
 	{
 	block.style.background = "blue";
 	do{
-	posxblock = 350*Math.random();
-	posyblock = 350*Math.random();
+	posxblock = Math.round(350*Math.random());
+	posyblock = Math.round(350*Math.random());
 	}
 	while(((posy+50)> posyblock && posy < (posyblock+50))&&((posx+50)>posxblock && posx < (posxblock+50)));
 	block.style.top = posyblock + 'px';
@@ -198,7 +207,22 @@
 								checkPosition();
 								}, 11);
 	}
-
+   function AutoSearchBox() {
+				clearInterval(id);
+				id = setInterval(function(){
+										  var distx = posx - posxblock ;
+										  var disty = posy - posyblock ;
+										  posx=posx+Math.abs(distx/distx);
+										  posy=posy+Math.abs(disty/disty);
+										  elem.style.top = posy + 'px'; 
+										  elem.style.left = posx + 'px'; 
+										  document.getElementById("y").innerHTML = elem.style.top ;
+										  document.getElementById("x").innerHTML = elem.style.left ;
+										  checkPosition();
+										  }, 11);
+							}
+   
+  
 </script>	
 	
 </body>

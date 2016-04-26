@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Cajas </title>
+		
+	</head>
+<body>
+		<style>
+			#container {
+			  width: 400px;
+			  height: 400px;
+			  position: relative;
+			  background: yellow;
+			  z-index: 1;
+			}
+			#animate {
+			  width: 50px;
+			  height: 50px;
+			  position: absolute;
+			  background-color: red;
+			  z-index:3;
+			}
+			#block {
+				width: 50px;
+				height: 50px;
+				position: absolute;
+				background-color: yellow;
+				z-index: 2;	    
+			}
+			button {
+			 width: 70px;
+			 height: 50px;
+			}
+			#cursores {
+			position:relative;
+			float:right;
+			}
+		</style>
+	<div id=cursores>
+		<button onclick="ArribaIz()">ArribaIz</button>
+		<button onclick="Arriba()">Arriba</button>
+		<button onclick="ArribaDer()">ArribaDer</button>
+		<br>
+		<button onclick="Izquierda()">Izquierda</button>
+		<button onclick="Start()">Start</button>
+		<button onclick="Derecha()">Derecha</button>
+		<br>
+		<button onclick="AbajoIz()">AbajoIz</button>
+		<button onclick="Abajo()">Abajo</button>
+		<button onclick="AbajoDer()">AbajoDer</button>
+	</div>
+	<div id ="container">
+	<div id ="animate"></div>
+	<div id="block"></div>
+	</div>
+	<h1> Caja Roja: </h1>
+	<p id="x"></p>
+	<p id="y"></p>
+	<h1> Caja Azul: </h1>
+	<p id="xrandom"></p>
+	<p id="yrandom"></p>
+	<h1> Distancia: </h1>
+	<p id="distx"></p>
+	<p id="disty"></p>
+	<button onclick="RandomBlock()">Random</button>
+<script>
+
+	var elem = document.getElementById("animate"); 
+	var block = document.getElementById("block");
+	var posx=0;
+	var posy=0;
+	var posxblock;
+	var posyblock;
+	var id;
+	function Start()
+	{
+			posx=175;
+			posy=175;
+			elem.style.top = posy + 'px'; 
+			elem.style.left = posx + 'px'; 
+			document.getElementById("y").innerHTML = "Y: "+elem.style.top ;
+			document.getElementById("x").innerHTML = "X: "+elem.style.left ;
+	}
+	function RandomBlock()
+	{
+	block.style.background = "blue";
+	do{
+	posxblock = 350*Math.random();
+	posyblock = 350*Math.random();
+	}
+	while(((posy+50)> posyblock && posy < (posyblock+50))&&((posx+50)>posxblock && posx < (posxblock+50)));
+	block.style.top = posyblock + 'px';
+	block.style.left = posxblock + 'px';
+	document.getElementById("yrandom").innerHTML = "Y: "+block.style.top ;
+	document.getElementById("xrandom").innerHTML = "X: "+block.style.left ;
+	}
+	function checkPosition()
+	{
+		if(posy <= 0 || posx <= 0 || posy >= 350 || posx >= 350)
+			{
+			clearInterval(id);
+			Start();
+			alert("Game Over");
+			}
+		if((posy+50)> posyblock && posy < (posyblock+50))
+		{
+			if((posx+50)>posxblock && posx < (posxblock+50))
+			{
+			clearInterval(id);
+			alert("Chocaste");
+			document.getElementById("disty").innerHTML = ( posy - posyblock ) ;
+			document.getElementById("distx").innerHTML = ( posx - posxblock ) ;
+			}
+		}
+	}
+
+	function ArribaIz(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posx--;
+								posy--;
+								elem.style.top = posy + 'px'; 
+								elem.style.left = posx + 'px'; 
+								document.getElementById("y").innerHTML = elem.style.top ;
+								document.getElementById("x").innerHTML = elem.style.left ;
+								checkPosition();
+								}, 11);
+	}
+	function Arriba(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posy--;
+								elem.style.top = posy + 'px'; 
+								document.getElementById("y").innerHTML = elem.style.top ;
+								checkPosition();
+								}, 11);
+	}
+	function ArribaDer(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posy--;
+								posx++;
+								elem.style.top = posy + 'px'; 
+								elem.style.left = posx + 'px'; 
+								document.getElementById("y").innerHTML = elem.style.top ;
+								document.getElementById("x").innerHTML = elem.style.left ;
+								checkPosition();
+								}, 11);
+	}
+	function Izquierda(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posx--;
+								elem.style.left = posx + 'px'; 
+								document.getElementById("x").innerHTML = elem.style.left ;
+								checkPosition();
+								}, 11);
+	}
+	function Derecha(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posx++;
+								elem.style.left = posx + 'px'; 
+								document.getElementById("x").innerHTML = elem.style.left ;
+								checkPosition();
+								}, 11);
+	}
+	function AbajoIz(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posy++;
+								posx--;
+								elem.style.top = posy + 'px'; 
+								elem.style.left = posx + 'px'; 
+								document.getElementById("y").innerHTML = elem.style.top ;
+								document.getElementById("x").innerHTML = elem.style.left ;
+								checkPosition();
+								}, 11);
+	}
+	function Abajo(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posy++;
+								elem.style.top = posy + 'px'; 
+								document.getElementById("y").innerHTML = elem.style.top ;
+								checkPosition();
+								}, 11);
+	}
+	function AbajoDer(){
+	clearInterval(id);
+	id = setInterval(function(){
+								posx++;
+								posy++;
+								elem.style.top = posy + 'px'; 
+								elem.style.left = posx + 'px'; 
+								document.getElementById("y").innerHTML = elem.style.top ;
+								document.getElementById("x").innerHTML = elem.style.left ;
+								checkPosition();
+								}, 11);
+	}
+
+</script>	
+	
+</body>
+</html>
